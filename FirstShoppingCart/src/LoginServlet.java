@@ -1,5 +1,6 @@
 
 
+import java.util.List;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -13,19 +14,23 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import model.Product;
- 
+import model.Shoppinguser;
+import model.Usershoppingcart;
+import dao.ProductDB;
+import dao.UserDB;
+import dao.UserShoppingCartDB;
+
 /**
  * Servlet implementation class LoginServlet
  */
-@WebServlet("/LogoutServlet")
-public class LogoutServlet extends HttpServlet {
+@WebServlet("/LoginServlet") 
+public class LoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public LogoutServlet() {
+    public LoginServlet() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	/**
@@ -33,10 +38,26 @@ public class LogoutServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
-	    session.removeAttribute("cart");
-	    ArrayList<Product> cart = new ArrayList<Product>();
-	    session.setAttribute("cart", cart);
-		getServletContext().getRequestDispatcher("/ProductServlet").forward(request, response);
+		// TODO Auto-generated method stub
+		String username = request.getParameter("username");
+		String password = request.getParameter("password");
+		
+		if(UserDB.checkLogin(username, password) != null){
+			//Shoppinguser user = UserDB.checkLogin(username, password);
+			session.setAttribute("username", username);
+			
+			List<Usershoppingcart> lists = UserShoppingCartDB.getProductsByUsername(username);
+			ArrayList<Product> cart = new ArrayList<Product>();
+			if(lists != null){
+				ArrayList<Usershoppingcart> usershoppingcart = new ArrayList<Usershoppingcart>(lists);			
+				for(Usershoppingcart u : usershoppingcart){
+					Product p = ProductDB.getProductByID(u.getPid());
+					cart.add(p);
+				}
+			}
+			session.setAttribute("cart", cart);
+		}
+		getServletContext().getRequestDispatcher("/index.jsp").forward(request, response);
 	}
 
 	/**
@@ -46,4 +67,5 @@ public class LogoutServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
+
 }

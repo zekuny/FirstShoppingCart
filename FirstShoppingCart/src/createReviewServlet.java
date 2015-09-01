@@ -1,9 +1,9 @@
 
 
 import java.io.IOException;
-import java.util.ArrayList;
+import java.sql.Connection;
+import java.sql.SQLException;
 
-import javax.persistence.Column;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -11,20 +11,19 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import dao.ProductDB;
-import model.Product;
+import dao.ShoppingReviewsDB;
+import model.Shoppingreview;
 
-/**
- * Servlet implementation class AddCartServlet
+/** 
+ * Servlet implementation class createReviewServlet
  */
-@WebServlet("/AddCartServlet")
-public class AddCartServlet extends HttpServlet {
-	private static final long serialVersionUID = 1L;
-       
+@WebServlet("/createReviewServlet")
+public class createReviewServlet extends HttpServlet {
+	private static final long serialVersionUID = 1L; 
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public AddCartServlet() {
+    public createReviewServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -34,16 +33,21 @@ public class AddCartServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		int pid = Integer.parseInt(request.getParameter("pid"));
+		String review = request.getParameter("review");
+		String reviewdate = request.getParameter("reviewdate");
 		HttpSession session = request.getSession();
-		if(session.getAttribute("username") == null){
-			getServletContext().getRequestDispatcher("/createProfile.jsp").forward(request, response);
-		}else{
-			ArrayList<Product> list = (ArrayList<Product>) session.getAttribute("cart");
-			int pid = Integer.parseInt(request.getParameter("pid"));
-			Product p = ProductDB.getProductByID(pid);
-			list.add(p);
-			getServletContext().getRequestDispatcher("/ProductServlet").forward(request, response);
-		}
+		String username = (String) session.getAttribute("username");
+		Shoppingreview s = new Shoppingreview();
+		s.setPid(pid);
+		s.setReview(review);
+		s.setReviewdate(reviewdate);
+		s.setUsername(username);
+		ShoppingReviewsDB.insert(s);
+		
+		System.out.println("-----------------------------");
+		String url = "/ProductDetailServlet?pid=" + pid;
+		getServletContext().getRequestDispatcher(url).forward(request, response);
 	}
 
 	/**

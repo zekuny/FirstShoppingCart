@@ -2,6 +2,7 @@
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.servlet.ServletException;
@@ -12,7 +13,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import dao.ProductDB;
+import dao.UserShoppingCartDB;
 import model.Product;
+import model.Usershoppingcart;
 
 /**
  * Servlet implementation class ProductServlet
@@ -35,18 +38,22 @@ public class ConfirmServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		HttpSession session = request.getSession();
-		ArrayList<Product> list;
-		if(session.getAttribute("cart") != null){
-			list = (ArrayList<Product>) session.getAttribute("cart");
-		}else{
-			list = new ArrayList<Product>();
-			session.setAttribute("cart", list);
-		}
+		ArrayList<Product> list = (ArrayList<Product>) session.getAttribute("cart");
 		double total = 0.0;
 		for(Product p : list){
 			total += p.getPrice();
 		}
 	    session.removeAttribute("cart");	
+	    String username = (String) session.getAttribute("username");
+	    List<Usershoppingcart> tmp = UserShoppingCartDB.getProductsByUsername(username);
+		if(tmp != null){
+			ArrayList<Usershoppingcart> lists = new ArrayList<Usershoppingcart>(tmp);
+		    for(Usershoppingcart u : lists){
+		    	UserShoppingCartDB.delete(u);
+		    }
+		}
+	    ArrayList<Product> cart = new ArrayList<Product>();
+	    session.setAttribute("cart", cart);
 		String table = "";
 		table += "<div class=\"container\">"
 				+ "<div class=\"jumbotron other-color\">"

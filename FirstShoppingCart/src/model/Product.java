@@ -14,7 +14,7 @@ public class Product implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	private long pid;
+	private int pid;
 
 	private String description;
 
@@ -30,11 +30,11 @@ public class Product implements Serializable {
 	public Product() {
 	}
 
-	public long getPid() {
+	public int getPid() {
 		return this.pid;
 	}
 
-	public void setPid(long pid) {
+	public void setPid(int pid) {
 		this.pid = pid;
 	}
 
@@ -69,5 +69,23 @@ public class Product implements Serializable {
 	public void setPrice(double price) {
 		this.price = price;
 	}
-
+	
+	@Override 
+	public boolean equals(Object other){ 
+		if(this == other) 
+			return true; 
+		if(other == null || (this.getClass() != other.getClass())){ 
+			return false; 
+		} 
+		Product product = (Product) other; 
+		return this.pid == product.pid; 
+	}
+	
+	@Override 
+	public int hashCode(){ 
+		int result = 0; 
+		result = 31 * result + pid; 
+		result = 31 * result + (pName !=null ? pName.hashCode() : 0); 
+		return result; 
+	} 
 }

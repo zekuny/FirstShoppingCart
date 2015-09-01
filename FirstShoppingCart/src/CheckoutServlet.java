@@ -35,19 +35,8 @@ public class CheckoutServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		HttpSession session = request.getSession();
-		ArrayList<Product> list;
-		if(session.getAttribute("cart") != null){
-			list = (ArrayList<Product>) session.getAttribute("cart");
-		}else{
-			list = new ArrayList<Product>();
-			session.setAttribute("cart", list);
-		}
-		
-		for(int i = 0; i < list.size(); i++){
-			System.out.println(list.get(i));
-		}
-		
-		
+		ArrayList<Product> list = (ArrayList<Product>) session.getAttribute("cart");
+
 		String head = "<h1>You have " + list.size() + " item(s) in your shopping cart</h1>";
 		head += "<a href = \"ConfirmServlet\"><button type=\"button\" class=\"btn pull-left btn-info btn-lg\">Continue</button></a>";
 

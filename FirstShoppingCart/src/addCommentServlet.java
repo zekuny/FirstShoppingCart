@@ -1,30 +1,28 @@
 
 
 import java.io.IOException;
-import java.util.ArrayList;
+import java.sql.Connection;
+import java.sql.SQLException;
 
-import javax.persistence.Column;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
-import dao.ProductDB;
-import model.Product;
+import dao.ShoppingReviewCommentDB;
+import model.Shoppingreviewcomment;
 
 /**
- * Servlet implementation class AddCartServlet
+ * Servlet implementation class addCommentServlet
  */
-@WebServlet("/AddCartServlet")
-public class AddCartServlet extends HttpServlet {
+@WebServlet("/addCommentServlet")
+public class addCommentServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public AddCartServlet() {
+    public addCommentServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -34,16 +32,15 @@ public class AddCartServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		HttpSession session = request.getSession();
-		if(session.getAttribute("username") == null){
-			getServletContext().getRequestDispatcher("/createProfile.jsp").forward(request, response);
-		}else{
-			ArrayList<Product> list = (ArrayList<Product>) session.getAttribute("cart");
-			int pid = Integer.parseInt(request.getParameter("pid"));
-			Product p = ProductDB.getProductByID(pid);
-			list.add(p);
-			getServletContext().getRequestDispatcher("/ProductServlet").forward(request, response);
-		}
+		int reid = Integer.parseInt(request.getParameter("reid"));
+		int pid = Integer.parseInt(request.getParameter("pid"));
+		String comment = request.getParameter("comments");
+		Shoppingreviewcomment s = new Shoppingreviewcomment();
+		s.setReviewid(reid);
+		s.setReviewcomment(comment);
+		ShoppingReviewCommentDB.insert(s);
+		String url = "/commentReviewServlet?reid=" + reid;
+		getServletContext().getRequestDispatcher(url).forward(request, response);
 	}
 
 	/**
