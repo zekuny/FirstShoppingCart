@@ -75,13 +75,15 @@ public class ProductDetailServlet extends HttpServlet {
 			table += "<a href = \"createProfile.jsp\"><button type=\"button\" class=\"btn pull-left btn-info btn-lg\">Login to wirte a review</button></a>";
 		}
 		
-		table += "<table class=\"table table-striped\"><thead><tr><th>User</th><th>Review</th><th>Date</th><th>Comment on this review</th></tr></thead>";
+		table += "<table class=\"table table-striped\"><thead><tr><th>User</th><th>Review</th><th>Rating</th><th>Date</th><th>Comment on this review</th></tr></thead>";
 		List<Shoppingreview> tmp = ShoppingReviewsDB.getAllReviewByID(pid);
 		if(tmp != null){
 			List<Shoppingreview> reviews = new ArrayList<Shoppingreview>(tmp);
 			for(Shoppingreview s : reviews){
-				table += "<tr><td>"+ s.getUsername() +"</td><td>"+ s.getReview() +"</td><td>"+ s.getReviewdate() + "</td>"
-					  + "<td><a href = \"commentReviewServlet?reid=" + s.getReviewid() + "&pid=" + pid + "\">Comment</a></td></td></tr>\n";
+				table += "<tr><td>"+ s.getUsername() +"</td><td>"+ s.getReview() +"</td>" +
+					   "<td>"+ addStar(s.getRating()) + "</td>" + 
+					   "<td>"+ s.getReviewdate() + "</td>" + 		  
+					   "<td><a href = \"commentReviewServlet?reid=" + s.getReviewid() + "&pid=" + pid + "\">Comment</a></td></tr>\n";
 			}
 		}
 		table += "</table>";
@@ -96,5 +98,20 @@ public class ProductDetailServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
-
+	
+	private String addStar(int n){
+		String s = "";
+		s += "<img src=\"images/entry2.gif\" alt=\"Product image\" style=\"width: 24px; height: 24px;\">";
+		if(n == 1){
+			return s;
+		}else if(n == 2){
+			return s + s;
+		}else if(n == 3){
+			return s + s + s;
+		}else if(n == 4){
+			return s + s + s + s;
+		}else{
+			return s + s + s + s + s;
+		}
+	}
 }

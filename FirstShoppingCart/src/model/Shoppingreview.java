@@ -29,6 +29,8 @@ public class Shoppingreview implements Serializable {
 	private String reviewdate;
 
 	private String username;
+	
+	private int rating;
 
 	public Shoppingreview() {
 	}
@@ -73,4 +75,11 @@ public class Shoppingreview implements Serializable {
 		this.username = username;
 	}
 
+	public int getRating() {
+		return rating;
+	}
+
+	public void setRating(int rating) {
+		this.rating = rating;
+	}
 }

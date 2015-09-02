@@ -13,12 +13,12 @@
 <title>Insert title here</title>
 </head>
 <body>
-
+<jsp:include page="header.jsp"/>
 
 <h1>Be kind please...</h1>
 ${table}
 
 <br>
-
+<jsp:include page="footer.jsp"/>
 </body>
 </html>

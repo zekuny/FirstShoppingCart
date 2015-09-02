@@ -13,6 +13,10 @@
 	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <script
 	src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+	
+<link rel="stylesheet" href="jquery.rating.css">
+<script src="jquery.rating.js"></script>
+	
 <style>
 .other-color {
 	background: lightskyblue
@@ -26,6 +30,7 @@
 <title>Welcome to Tian Mao!</title>
 </head>
 <body>
+<jsp:include page="header.jsp"/>
 <%
 String pid = request.getParameter("pid");
 %>
@@ -58,6 +63,18 @@ String pid = request.getParameter("pid");
 		</div>
 
 		<div class="form-group">
+			<label class="control-label col-sm-5" for="class">Rating: 
+				</label>
+			<div class="col-sm-5">
+				<input type="radio" name="rating" value="1" class="star">
+           		<input type="radio" name="rating" value="2" class="star">
+            	<input type="radio" name="rating" value="3" class="star" checked>
+            	<input type="radio" name="rating" value="4" class="star">
+            	<input type="radio" name="rating" value="5" class="star">
+			</div>
+		</div>
+
+		<div class="form-group">
 			<div class="col-sm-offset-2 col-sm-5">
 				<center>
 					<button type="submit" class="btn btn-primary btn-lg btn-block"
@@ -65,9 +82,12 @@ String pid = request.getParameter("pid");
 				</center>
 			</div>
 		</div>
+		
+
 	</form>
 </div>	
+<jsp:include page="footer.jsp"/>
 </body>	
-	
+</html>	
 		
 		

@@ -23,47 +23,30 @@
 }
 </style>
 
-<title>Welcome to Tian Mao!</title>
-</head>
-<body>
-	<div class="container">
-		<div class="dropdown">
-			<button class="btn pull-left btn-info dropdown-toggle" type="button"
-				data-toggle="dropdown">
-				Login<span class="caret"></span>
-			</button>
-			<ul class="dropdown-menu">
-				<li><a href="#"></a>
-					<div class="container">
-						<form action="LoginServlet" method="post"> <!-- The input for email and password goes to the LoginServlet -->
-							<div class="form-group">
-								<label class="control-label col-sm-5">Username: </label>
-								<div class="col-sm-5">
-									<input type="text" class="form-control" id="username" name="username" placeholder="Enter username">
-								</div>
-							</div>
-							<div class="form-group">
-								<label class="control-label col-sm-5">Password: </label>
-								<div class="col-sm-5">
-									<input type="text" class="form-control" id="password"
-										name="password" placeholder="Enter password">
-								</div>
-							</div>
-							<div class="form-group">
-								<div class="col-sm-offset-2 col-sm-5">
-									<center>
-										<button type="submit"
-											class="btn btn-primary btn-lg btn-block" value="addstudent">Login</button>
-									</center>
-								</div>
-							</div>				
-						</form>			
-					</div>
-				</li>
-			</ul>
-		</div>
-	</div>	
+<script>
+function validateForm() {
+    var x = document.getElementById("username1").value;
+    if (x == null || x == "") {
+        alert("username must be filled out");
+        return false;
+    }
+    
+    var y = document.getElementById("password1").value;
+    if (y == null || y == "") {
+        alert("password must be filled out");
+        return false;
+    }
+    
+    var z = document.getElementById("email1").value;
+    if (z == null || z == "") {
+        alert("email must be filled out");
+        return false;
+    }
+}
 
+</script>
+
+<jsp:include page="header.jsp"/>
 <h2>Create a new account or login then you can shop!!!</h2>
 <!-- create a new account -->
 	<div class="container">
@@ -74,18 +57,18 @@
 				</center>
 			</div>
 		</div>
-		<form class="form-horizontal" role="form" action="CreateAccountServlet" method="post">
+		<form class="form-horizontal" role="myForm" action="CreateAccountServlet" onsubmit="return validateForm()" method="post">
 			<div class="form-group">
 				<label class="control-label col-sm-5">User Name :</label>
 				<div class="col-sm-5">
-					<input type="text" class="form-control" id="username"
+					<input type="text" class="form-control" id="username1"
 						name="username">
 				</div>
 			</div>
 			<div class="form-group">
 				<label class="control-label col-sm-5" for="class">Password :</label>
 				<div class="col-sm-5">
-					<input type="text" class="form-control" id="password" name="password"
+					<input type="text" class="form-control" id="password1" name="password"
 						placeholder="at least 6 characters">
 				</div>
 			</div>
@@ -93,7 +76,7 @@
 			<div class="form-group">
 				<label class="control-label col-sm-5" for="assignment">Email: </label>
 				<div class="col-sm-5">
-					<input type="text" class="form-control" id="email"
+					<input type="email" class="form-control" id="email1"
 						name="email" placeholder="Example: dasha@gamil.com">
 				</div>
 			</div>
@@ -110,4 +93,5 @@
 	</div>
 	
 <a href = "index.jsp"><button type="button" class="btn btn-info btn-lg">No I don't want to create account...>>></button></a>
+<jsp:include page="footer.jsp"/>
 </body>

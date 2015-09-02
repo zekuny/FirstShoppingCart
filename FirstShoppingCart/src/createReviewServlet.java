@@ -33,19 +33,23 @@ public class createReviewServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		int rating = Integer.parseInt(request.getParameter("rating"));
 		int pid = Integer.parseInt(request.getParameter("pid"));
 		String review = request.getParameter("review");
 		String reviewdate = request.getParameter("reviewdate");
 		HttpSession session = request.getSession();
 		String username = (String) session.getAttribute("username");
+		
+		// insert into database
 		Shoppingreview s = new Shoppingreview();
 		s.setPid(pid);
 		s.setReview(review);
 		s.setReviewdate(reviewdate);
 		s.setUsername(username);
+		s.setRating(rating);
 		ShoppingReviewsDB.insert(s);
 		
-		System.out.println("-----------------------------");
+		// redirect
 		String url = "/ProductDetailServlet?pid=" + pid;
 		getServletContext().getRequestDispatcher(url).forward(request, response);
 	}
@@ -57,5 +61,4 @@ public class createReviewServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
-
 }

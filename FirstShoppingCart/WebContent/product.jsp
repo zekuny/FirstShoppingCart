@@ -10,8 +10,10 @@
 <title>Welcome to Tian Mao!</title>
 </head>
 <body>
+<jsp:include page="header.jsp"/>
 ${head}
 <table class="table table-striped">${table}</table>
 <a href = "index.jsp"><button type="button" class="btn btn-info btn-lg">Back to home page>>></button></a>
+<jsp:include page="footer.jsp"/>
 </body>
 </html>

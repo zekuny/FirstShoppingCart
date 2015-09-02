@@ -39,7 +39,7 @@ public class ProductServlet extends HttpServlet {
 		if(session.getAttribute("username") != null){		
 			ArrayList<Product> list = (ArrayList<Product>) session.getAttribute("cart");
 			head = "<h1>You have " + list.size() + " item(s) in your shopping cart</h1>";
-			head += "<a href = \"CheckoutServlet\"><button type=\"button\" class=\"btn pull-left btn-info btn-lg\">Check out now</button></a>";
+			head += "<a href = \"checkout.jsp\"><button type=\"button\" class=\"btn pull-left btn-info btn-lg\">Check out now</button></a>";
 			head += "<a href = \"LogoutServlet\"><button type=\"button\" class=\"btn pull-left btn-info btn-lg\">Clean Shopping Cart</button></a>";
 		}
 
