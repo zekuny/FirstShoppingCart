@@ -12,9 +12,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import dao.PaymentDB;
 import dao.ProductDB;
 import dao.ShoppingHistoryDB;
 import dao.UserShoppingCartDB;
+import model.Payment;
 import model.Product;
 import model.Shoppinghistory;
 import model.Usershoppingcart;
@@ -41,6 +43,17 @@ public class ConfirmServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		HttpSession session = request.getSession();
 		String username = (String) session.getAttribute("username");
+		// Insert Payment
+		String cardnumber = request.getParameter("cardnumber");
+		String shippingaddress = request.getParameter("shippingaddress");
+		String billingaddress = request.getParameter("billingaddress");
+		Payment payment = new Payment();
+		payment.setCardnumber(cardnumber);
+		payment.setBillingaddress(billingaddress);
+		payment.setShippingaddress(shippingaddress);
+		payment.setUsername(username);
+		PaymentDB.insert(payment);
+		
 		ArrayList<Product> list = (ArrayList<Product>) session.getAttribute("cart");
 		double total = 0.0;
 		for(Product p : list){

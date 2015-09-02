@@ -23,7 +23,7 @@
 <c:if test="${fn:length(cart) <= 1}">
    <h1>You have ${fn:length(cart)} item in your shopping cart</h1>
 </c:if>
-<a href = "ConfirmServlet"><button type="button" class="btn pull-left btn-info btn-lg">Continue</button></a><br>
+<a href="ConfirmServlet"><button type="button" class="btn pull-left btn-info btn-lg">Continue</button></a><br>
 
 <table class="table table-striped">
 	<thead>
@@ -41,6 +41,38 @@
 	</tbody>
 </table>
 
+
+<form class="form-horizontal" role="myForm" action="ConfirmServlet" onsubmit="return validateForm()" method="post">
+	<div class="form-group">
+		<label class="control-label col-sm-5">Card Number :</label>
+		<div class="col-sm-5">
+			<input type="text" class="form-control" id="cardnumber" name="cardnumber">
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="control-label col-sm-5" for="class">Shipping Address :</label>
+		<div class="col-sm-5">
+			<input type="text" class="form-control" id="shippingaddress" name="shippingaddress">
+		</div>
+	</div>
+
+	<div class="form-group">
+		<label class="control-label col-sm-5" for="assignment">Billing Address: </label>
+		<div class="col-sm-5">
+			<input type="text" class="form-control" id="billingaddress"
+				name="billingaddress" >
+		</div>
+	</div>
+
+	<div class="form-group">
+		<div class="col-sm-offset-2 col-sm-5">
+			<center>
+				<button type="submit" class="btn btn-primary btn-lg btn-block"
+					value="addstudent">Confirm</button>
+			</center>
+		</div>
+	</div>
+</form>
 <a href = "ProductServlet"><button type="button" class="btn btn-info btn-lg">Back>>></button></a>
 <jsp:include page="footer.jsp"/>
 </body>
