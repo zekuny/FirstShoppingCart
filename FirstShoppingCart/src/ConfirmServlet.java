@@ -73,8 +73,8 @@ public class ConfirmServlet extends HttpServlet {
 		double credit = su.getCredit();
 		if(credit > 0){
 			if(credit >= total){
-				total = 0;
 				su.setCredit(credit - total);
+				total = 0;
 			}else{
 				total = total - credit;
 				su.setCredit(0);
