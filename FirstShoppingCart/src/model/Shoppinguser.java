@@ -24,8 +24,19 @@ public class Shoppinguser implements Serializable {
 	private String password;
 
 	private String username;
+	
+	private double credit;
 
 	public Shoppinguser() {
+		credit = 0.0;
+	}
+
+	public double getCredit() {
+		return credit;
+	}
+
+	public void setCredit(double credit) {
+		this.credit = credit;
 	}
 
 	public long getUserid() {

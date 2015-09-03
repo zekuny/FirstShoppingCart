@@ -15,10 +15,12 @@ import javax.servlet.http.HttpSession;
 import dao.PaymentDB;
 import dao.ProductDB;
 import dao.ShoppingHistoryDB;
+import dao.UserDB;
 import dao.UserShoppingCartDB;
 import model.Payment;
 import model.Product;
 import model.Shoppinghistory;
+import model.Shoppinguser;
 import model.Usershoppingcart;
 
 /**
@@ -65,6 +67,21 @@ public class ConfirmServlet extends HttpServlet {
 	    	ShoppingHistoryDB.insert(sh);
 		}
 		total = total * 1.06;
+		
+		// the magic credit
+		Shoppinguser su = UserDB.getUserByName(username);
+		double credit = su.getCredit();
+		if(credit > 0){
+			if(credit >= total){
+				total = 0;
+				su.setCredit(credit - total);
+			}else{
+				total = total - credit;
+				su.setCredit(0);
+			}
+		}
+		UserDB.update(su);
+		
 	    session.removeAttribute("cart");	    
 	    List<Usershoppingcart> tmp = UserShoppingCartDB.getProductsByUsername(username);
 		if(tmp != null){

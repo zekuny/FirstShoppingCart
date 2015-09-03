@@ -21,6 +21,7 @@
                 <li class="active"><a href="checkout.jsp">Shopping Cart</a></li>
                 	<% if(session.getAttribute("username").equals("admin")){ %>
 						<li class="active"><a href = "AllOrderServlet">View all orders</a></li>
+						<li class="active"><a href = "CreditServlet">ISSUE CREDIT</a></li>
 					<%} %>
                 <%} %>
                 <li class="active"><a href="https://www.tmall.com/?v">Contact us</a></li>
@@ -69,8 +70,7 @@
 										<div class="form-group">
 											<div class="col-sm-offset-2 col-sm-5">
 												<center>
-													<button type="submit"
-														class="btn btn-primary btn-lg btn-block" value="addstudent">Login</button>
+													<button type="submit" class="btn btn-primary btn-lg btn-block" value="addstudent">Login</button>
 												</center>
 											</div>
 										</div>				

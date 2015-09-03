@@ -73,9 +73,9 @@ public class UserDB {
 		return users.get(0);
 	}
 	
-	public static List<Shoppinguser> getAllProduct(){
+	public static List<Shoppinguser> getAllUser(){
 		EntityManager em = DBUtil.getEmFactory().createEntityManager();	
-		String qString = "select i from Product i";
+		String qString = "select i from Shoppinguser i";
 		TypedQuery<Shoppinguser> q = em.createQuery(qString, Shoppinguser.class);
 		List<Shoppinguser> users;
 		try{
@@ -106,9 +106,25 @@ public class UserDB {
 		return users;
 	}
 	
-	public static Shoppinguser getProductByID(int pid){
+	public static Shoppinguser getUserByID(int uid){
 		EntityManager em = DBUtil.getEmFactory().createEntityManager();	
-		String qString = "select i from Product i where i.pid = " + pid;
+		String qString = "select i from Shoppinguser i where i.userid = " + uid;
+		TypedQuery<Shoppinguser> q = em.createQuery(qString, Shoppinguser.class);
+		List<Shoppinguser> users;
+		try{
+			users = q.getResultList();
+			if(users == null || users.isEmpty()){
+				users = null;
+			}
+		}finally{
+			em.close();
+		}
+		return users.get(0);
+	}
+	
+	public static Shoppinguser getUserByName(String uname){
+		EntityManager em = DBUtil.getEmFactory().createEntityManager();	
+		String qString = "select i from Shoppinguser i where i.username = '" + uname + "'";
 		TypedQuery<Shoppinguser> q = em.createQuery(qString, Shoppinguser.class);
 		List<Shoppinguser> users;
 		try{
