@@ -74,6 +74,22 @@ public class ShoppingHistoryDB {
 		return users;
 	}
 	
+	public static List<Shoppinghistory> getAllHistoryByName(String username){
+		EntityManager em = DBUtil.getEmFactory().createEntityManager();	
+		String qString = "select i from Shoppinghistory i where i.username = '" + username + "'";
+		TypedQuery<Shoppinghistory> q = em.createQuery(qString, Shoppinghistory.class);
+		List<Shoppinghistory> users;
+		try{
+			users = q.getResultList();
+			if(users == null || users.isEmpty()){
+				users = null;
+			}
+		}finally{
+			em.close();
+		}
+		return users;
+	}
+	
 	
 	public static List<Shoppinghistory> getPeopleByCompanyName(String company){
 		EntityManager em = DBUtil.getEmFactory().createEntityManager();	

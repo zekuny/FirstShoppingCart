@@ -22,7 +22,9 @@
                 	<% if(session.getAttribute("username").equals("admin")){ %>
 						<li class="active"><a href = "AllOrderServlet">View all orders</a></li>
 						<li class="active"><a href = "CreditServlet">ISSUE CREDIT</a></li>
-					<%} %>
+					<%}else{ %>
+						<li class="active"><a href = "PastOrderServlet">View past orders</a></li>
+					<% }%>
                 <%} %>
                 <li class="active"><a href="https://www.tmall.com/?v">Contact us</a></li>
                 <li class="dropdown">
