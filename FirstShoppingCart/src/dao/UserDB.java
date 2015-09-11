@@ -9,6 +9,7 @@ import javax.persistence.TypedQuery;
 
 import customTools.DBUtil;
 import model.Shoppinguser;
+import model.Shoppinguser;
 
 
 public class UserDB {
@@ -136,5 +137,35 @@ public class UserDB {
 			em.close();
 		}
 		return users.get(0);
+	}
+	
+	public static boolean isAvailable(Shoppinguser user)
+	{
+		EntityManager em = DBUtil.getEmFactory().createEntityManager();
+		String query = "SELECT count(d.username) FROM Shoppinguser d WHERE UPPER(d.username) = :userName OR UPPER(d.email) = :email";
+		try
+		{
+			long l = (long) em.createQuery(query)
+					.setParameter("username", user.getUsername().toUpperCase())
+					.setParameter("email", user.getEmail().toUpperCase())
+					.getSingleResult();
+			if (l>0)
+			{
+				return false;
+			}
+			else
+			{
+				return true;
+			}
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+			return false;
+		}
+		finally
+		{
+			em.close();
+		}
 	}
 }
